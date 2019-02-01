@@ -18,6 +18,13 @@ architecture behav of riscv is
     -- ATTRIBUTES --------------------------------------------------------------
 begin
     -- PROGRAM COUNTER ---------------------------------------------------------
+    p_counter_ent : entity work.prgcounter(behav)
+        port map (
+            clkIn       => clkIn,
+            rstIn       => rstIn,
+            addressOut  => address
+        );
+
     -- PROGRAM MEM -------------------------------------------------------------
     -- REGISTERS ---------------------------------------------------------------
     -- ALU ---------------------------------------------------------------------
