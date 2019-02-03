@@ -2,12 +2,11 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 --------------------------------------------------------------------------------
 entity top is
-
 end top;
 --------------------------------------------------------------------------------
 architecture behav of top is
     -- CONSTANTS ---------------------------------------------------------------
-    constant  PERIOD : time := 10 ns;
+    constant  PERIOD : time := 10 ps;
     -- SIGNALS -----------------------------------------------------------------
     signal clk : std_logic := '0';
     signal rst : std_logic := '1';
@@ -20,14 +19,11 @@ begin
             rstIn => rst
         );
 
-    process
-    begin
-        clk <= not clk after PERIOD/2;
-    end process;
+    clk <= not clk after PERIOD/2;
+    rst <= '0' after PERIOD*5;
 
     process
     begin
-        rst <= '0' after PERIOD*10;
         wait for PERIOD*100;
         std.env.stop;
     end process;

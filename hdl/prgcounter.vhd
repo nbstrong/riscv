@@ -1,5 +1,7 @@
 library IEEE;
-use IEEE.std_logic_1164.all;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+--use IEEE.STD_LOGIC_UNSIGNED.ALL;
 --------------------------------------------------------------------------------
 entity prgcounter is
     port (
@@ -10,16 +12,20 @@ entity prgcounter is
 end prgcounter;
 --------------------------------------------------------------------------------
 architecture behav of prgcounter is
-    signal address : std_logic_vector(63 downto 0);
+    -- CONSTANTS ---------------------------------------------------------------
+    -- SIGNALS -----------------------------------------------------------------
+    signal address : unsigned(63 downto 0);
+    -- ALIASES -----------------------------------------------------------------
+    -- ATTRIBUTES --------------------------------------------------------------
 begin
-    process(clkIn)
+    process(clkIn, rstIn)
     begin
         if rstIn = '1' then
             address <= (others => '0');
         elsif rising_edge(clkIn) then
-            address <= (address + 1);
+            address <= address + 1;
         end if;
     end process;
     
-    addressOut <= address;
+    addressOut <= std_logic_vector(address);
 end behav;
