@@ -1,18 +1,19 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
-use IEEE.NUMERIC_STD.ALL;
+use IEEE.NUMERIC_STD.all;
 --------------------------------------------------------------------------------
 entity regfile is
     generic (
-        WIDTH     : natural
+        WIDTH     : natural;
+        DEPTH     : natural
     );
     port (
         clkIn           : in    std_logic;                          -- System Clock
         rstIn           : in    std_logic;                          -- System Reset
         regWrEnIn       : in    std_logic;                          -- Write Enable
-        reg1RdAddrIn    : in    std_logic_vector(4 downto 0);       -- Read Address for Port 1
-        reg2RdAddrIn    : in    std_logic_vector(4 downto 0);       -- Read Address for Port 2
-        regWrAddrIn     : in    std_logic_vector(4 downto 0);       -- Write Address
+        reg1RdAddrIn    : in    std_logic_vector;                   -- Read Address for Port 1
+        reg2RdAddrIn    : in    std_logic_vector;                   -- Read Address for Port 2
+        regWrAddrIn     : in    std_logic_vector;                   -- Write Address
         regWrDataIn     : in    std_logic_vector(WIDTH-1 downto 0); -- Write Data
         reg1RdDataOut   :   out std_logic_vector(WIDTH-1 downto 0); -- Read Data for Port 1
         reg2RdDataOut   :   out std_logic_vector(WIDTH-1 downto 0)  -- Read Data for Port 2
@@ -21,7 +22,7 @@ end regfile;
 --------------------------------------------------------------------------------
 architecture behav of regfile is
     -- TYPES -------------------------------------------------------------------
-    type reg_array is array (0 to 32)
+    type reg_array is array (0 to DEPTH)
         of std_logic_vector (WIDTH-1 downto 0);
     -- CONSTANTS ---------------------------------------------------------------
     -- SIGNALS -----------------------------------------------------------------

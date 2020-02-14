@@ -19,6 +19,8 @@ end riscv;
 --------------------------------------------------------------------------------
 architecture behav of riscv is
     -- CONSTANTS ---------------------------------------------------------------
+    constant MEM_DEPTH  : natural := 64;
+    constant REG_DEPTH  : natural := 32;
     -- SIGNALS -----------------------------------------------------------------
     signal instrAddress : std_logic_vector(WIDTH-1 downto 0);
     signal dataAddress  : std_logic_vector(WIDTH-1 downto 0);
@@ -46,11 +48,12 @@ begin
     -- INSTRUCTION MEMORY ------------------------------------------------------
     instr_mem_ent : entity work.mem(behav)
         generic map (
-            WIDTH           => WIDTH
+            WIDTH           => WIDTH,
+            DEPTH           => MEM_DEPTH
         )
         port map (
             clkIn           => clkIn,                       -- System Clock
-            wrIn            => wrIn,                        -- System Reset
+            wrIn            => wrIn,                        -- Write Enable
             addressIn       => instrAddress,                -- Address
             dataIn          => dataIn,                      -- Write Data
             dataOut         => instruction                  -- Read Data
@@ -59,7 +62,8 @@ begin
     -- REGISTERS ---------------------------------------------------------------
     reg_ent : entity work.regfile(behav)
         generic map (
-            WIDTH           => WIDTH
+            WIDTH           => WIDTH,
+            DEPTH           => REG_DEPTH
         )
         port map (
             clkIn           => clkIn,                       -- System Clock
@@ -77,11 +81,12 @@ begin
     -- DATA MEM ----------------------------------------------------------------
     data_mem_ent : entity work.mem(behav)
         generic map (
-            WIDTH           => WIDTH
+            WIDTH           => WIDTH,
+            DEPTH           => MEM_DEPTH
         )
         port map (
             clkIn           => clkIn,                       -- System Clock
-            wrIn            => wrIn,                        -- System Reset
+            wrIn            => wrIn,                        -- Write Enable
             addressIn       => dataAddress,                 -- Address
             dataIn          => wrData,                      -- Write Data
             dataOut         => rdData                       -- Read Data

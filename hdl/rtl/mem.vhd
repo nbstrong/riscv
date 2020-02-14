@@ -1,17 +1,18 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
-use IEEE.NUMERIC_STD.ALL;
+use IEEE.NUMERIC_STD.all;
 -- This is a **very** crude cache ----------------------------------------------
 -- Probably synthesizable, but crap.
 -- Does not clear on reset. This is to simulate non-volatile memory.
 --------------------------------------------------------------------------------
 entity mem is
     generic (
-        WIDTH     : natural
+        WIDTH     : natural;
+        DEPTH     : natural
     );
     port (
         clkIn     : in    std_logic;                            -- System Clock
-        wrIn      : in    std_logic;                            -- System Reset
+        wrIn      : in    std_logic;                            -- Write Enable
         addressIn : in    std_logic_vector(WIDTH-1 downto 0);   -- Address
         dataIn    : in    std_logic_vector(WIDTH-1 downto 0);   -- Write Data
         dataOut   :   out std_logic_vector(WIDTH-1 downto 0)    -- Read Data
@@ -20,7 +21,7 @@ end mem;
 --------------------------------------------------------------------------------
 architecture behav of mem is
     -- TYPES -------------------------------------------------------------------
-    type mem_array is array (0 to 63)
+    type mem_array is array (0 to DEPTH-1)
         of std_logic_vector (WIDTH-1 downto 0);
     -- CONSTANTS ---------------------------------------------------------------
     -- SIGNALS -----------------------------------------------------------------
