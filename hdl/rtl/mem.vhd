@@ -38,9 +38,6 @@ begin
     end process;
 end behav;
 
--- This code is likely not to stay depending upon how this project progresses
--- in the future.
-
 ---   0 0x00 0b00000000 00000000_00000000_00000000_00000000
 ---   4 0x04 0b00000100 00000000_00000000_00000000_00000000
 ---   8 0x08 0b00001000 00000000_00000000_00000000_00000000
