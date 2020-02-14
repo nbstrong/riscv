@@ -1,0 +1,6 @@
+INFO: [VRFC 10-163] Analyzing VHDL file "Z:/git_wa/riscv/hdl/rtl/pcounter.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'pcounter'
+INFO: [VRFC 10-163] Analyzing VHDL file "Z:/git_wa/riscv/hdl/rtl/riscv.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'riscv'
+INFO: [VRFC 10-163] Analyzing VHDL file "Z:/git_wa/riscv/hdl/behav/top.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'top'

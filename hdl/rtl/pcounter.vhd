@@ -3,17 +3,20 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 --------------------------------------------------------------------------------
 entity pcounter is
+    generic (
+        WIDTH       : natural
+    );
     port (
         clkIn       : in    std_logic;
         rstIn       : in    std_logic;
-        addressOut  :   out std_logic_vector(63 downto 0)
+        addressOut  :   out std_logic_vector(WIDTH-1 downto 0)
     );
 end pcounter;
 --------------------------------------------------------------------------------
 architecture behav of pcounter is
     -- CONSTANTS ---------------------------------------------------------------
     -- SIGNALS -----------------------------------------------------------------
-    signal address : unsigned(63 downto 0);
+    signal address : unsigned(WIDTH-1 downto 0);
     -- ALIASES -----------------------------------------------------------------
     -- ATTRIBUTES --------------------------------------------------------------
 begin
@@ -22,7 +25,7 @@ begin
         if rstIn = '1' then
             address <= (others => '0');
         elsif rising_edge(clkIn) then
-            address <= address + 1;
+            address <= address + (WIDTH/8);
         end if;
     end process;
     

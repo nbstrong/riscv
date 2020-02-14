@@ -1,19 +1,23 @@
 library IEEE;
-use IEEE.std_logic_1164.all;
+use IEEE.STD_LOGIC_1164.all;
 --------------------------------------------------------------------------------
 entity top is
 end top;
 --------------------------------------------------------------------------------
 architecture behav of top is
     -- CONSTANTS ---------------------------------------------------------------
-    constant  PERIOD : time := 10 ps;
+    constant WIDTH  : natural   := 32;
+    constant PERIOD : time      := 10 ps;
     -- SIGNALS -----------------------------------------------------------------
-    signal clk : std_logic := '0';
-    signal rst : std_logic := '1';
+    signal clk      : std_logic := '0';
+    signal rst      : std_logic := '1';
     -- ALIASES -----------------------------------------------------------------
     -- ATTRIBUTES --------------------------------------------------------------
 begin
     dut : entity work.riscv(behav)
+        generic map (
+            WIDTH => WIDTH
+        )
         port map (
             clkIn => clk,
             rstIn => rst

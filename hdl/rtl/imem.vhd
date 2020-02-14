@@ -1,26 +1,42 @@
 library IEEE;
-use IEEE.std_logic_1164.all;
+use IEEE.STD_LOGIC_1164.all;
+use IEEE.NUMERIC_STD.ALL;
 --------------------------------------------------------------------------------
-entity prgmem is
+entity imem is
+    generic (
+        WIDTH     : natural
+    );
     port (
         clkIn     : in    std_logic;
-        rstIn     : in    std_logic;
-        addressIn : in    std_logic_vector(63 downto 0);
-        instrOut  :   out std_logic_vector(63 downto 0);
+        wrIn      : in    std_logic;
+        addressIn : in    std_logic_vector(WIDTH-1 downto 0);
+        dataIn    : in    std_logic_vector(WIDTH-1 downto 0);
+        instrOut  :   out std_logic_vector(WIDTH-1 downto 0)
     );
-end prgmem;
+end imem;
 --------------------------------------------------------------------------------
-architecture behav of prgmem is
+architecture behav of imem is
     -- TYPES -------------------------------------------------------------------
     type mem_array is array (0 to 63)
-        of std_logic_vector (31 downto 0);
+        of std_logic_vector (WIDTH-1 downto 0);
     -- CONSTANTS ---------------------------------------------------------------
     -- SIGNALS -----------------------------------------------------------------
     signal mem_s : mem_array;
     -- ALIASES -----------------------------------------------------------------
     -- ATTRIBUTES --------------------------------------------------------------
 begin
-    instrOut <= mem_s(to_integer(unsigned(PC)));
+    -- This is a **very** crude cache ------------------------------------------
+    -- Does not clear on reset. This is so we can do things like write to the
+    -- memory, then reset the system and it will run the program we wrote.
+    ----------------------------------------------------------------------------
+    process(clkIn)
+    begin
+        if (wrIn = '1') then
+            mem_s(to_integer(unsigned(addressIn))) <= dataIn;
+        else
+            instrOut <= mem_s(to_integer(unsigned(addressIn)));
+        end if;
+    end process;
 end behav;
 
 -- This code is likely not to stay depending upon how this project progresses
