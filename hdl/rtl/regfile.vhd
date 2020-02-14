@@ -25,7 +25,8 @@ architecture behav of regfile is
         of std_logic_vector (WIDTH-1 downto 0);
     -- CONSTANTS ---------------------------------------------------------------
     -- SIGNALS -----------------------------------------------------------------
-    signal clkN : std_logic;
+    signal reg_s : mem_array;
+    signal clkN  : std_logic;
     -- ALIASES -----------------------------------------------------------------
     -- ATTRIBUTES --------------------------------------------------------------
 begin
@@ -37,12 +38,12 @@ begin
     ----------------------------------------------------------------------------
     readProc : process(clkIn, rstIn)
     begin
-        reg_array(0) <= (others => '0');
+        reg_s(0) <= (others => '0');
         if rstIn = '1' then
-            reg_array <= (others => (others => '0'));
+            reg_s <= (others => (others => '0'));
         elsif rising_edge(clkIn) then
-            reg1RdDataOut <= reg_array(to_integer(unsigned(reg1RdAddrIn)));
-            reg2RdDataOut <= reg_array(to_integer(unsigned(reg2RdAddrIn)));
+            reg1RdDataOut <= reg_s(to_integer(unsigned(reg1RdAddrIn)));
+            reg2RdDataOut <= reg_s(to_integer(unsigned(reg2RdAddrIn)));
         end if;
     end process;
 
@@ -54,7 +55,7 @@ begin
     begin
         if rising_edge(clkN) then
             if (regWrEnIn = '1') then
-                reg_array(to_integer(unsigned(regWrAddrIn))) <= regWrDataIn;
+                reg_s(to_integer(unsigned(regWrAddrIn))) <= regWrDataIn;
             end if;
         end if;
     end process;
