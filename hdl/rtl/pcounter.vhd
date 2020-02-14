@@ -7,9 +7,9 @@ entity pcounter is
         WIDTH       : natural
     );
     port (
-        clkIn       : in    std_logic;
-        rstIn       : in    std_logic;
-        addressOut  :   out std_logic_vector(WIDTH-1 downto 0)
+        clkIn       : in    std_logic;                                        -- System Clock
+        rstIn       : in    std_logic;                                        -- System Reset
+        addressOut  :   out std_logic_vector(WIDTH-1 downto 0)                -- Address Output
     );
 end pcounter;
 --------------------------------------------------------------------------------
@@ -28,6 +28,6 @@ begin
             address <= address + (WIDTH/8);
         end if;
     end process;
-    
+
     addressOut <= std_logic_vector(address);
 end behav;

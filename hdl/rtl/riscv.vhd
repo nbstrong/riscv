@@ -1,3 +1,4 @@
+--------------------------------------------------------------------------------
 -- A 32-bit RISC-V Processor
 -- Nicholas Strong
 --------------------------------------------------------------------------------
@@ -21,34 +22,56 @@ architecture behav of riscv is
     -- SIGNALS -----------------------------------------------------------------
     signal address      : std_logic_vector(WIDTH-1 downto 0);
     signal instruction  : std_logic_vector(WIDTH-1 downto 0);
+    signal regWr        : std_logic;
+    signal reg1RdAddr   : std_logic_vector(4 downto 0);
+    signal reg2RdAddr   : std_logic_vector(4 downto 0);
+    signal regWrAddr    : std_logic_vector(4 downto 0);
+    signal regWrData    : std_logic_vector(WIDTH-1 downto 0);
+    signal reg1RdData   : std_logic_vector(WIDTH-1 downto 0);
+    signal reg2RdData   : std_logic_vector(WIDTH-1 downto 0);
     -- ALIASES -----------------------------------------------------------------
     -- ATTRIBUTES --------------------------------------------------------------
 begin
     -- PROGRAM COUNTER ---------------------------------------------------------
     p_counter_ent : entity work.pcounter(behav)
         generic map (
-            WIDTH       => WIDTH
+            WIDTH           => WIDTH
         )
         port map (
-            clkIn       => clkIn,
-            rstIn       => rstIn,
-            addressOut  => address
+            clkIn           => clkIn,            -- System Clock
+            rstIn           => rstIn,            -- System Reset
+            addressOut      => address           -- Address Output
         );
 
     -- INSTRUCTION MEMORY ------------------------------------------------------
     instr_mem_ent : entity work.imem(behav)
         generic map (
-            WIDTH       => WIDTH
+            WIDTH           => WIDTH
         )
         port map (
-            clkIn       => clkIn,
-            wrIn        => wrIn,
-            addressIn   => addressIn,
-            dataIn      => dataIn,
-            instrOut    => instruction
+            clkIn           => clkIn,            -- System Clock
+            wrIn            => wrIn,             -- System Reset
+            addressIn       => addressIn,        -- Address from Program Counter
+            dataIn          => dataIn,           -- Write Data
+            instrOut        => instruction       -- Instruction Output
         );
 
     -- REGISTERS ---------------------------------------------------------------
+    reg_ent : entity work.regfile(behav)
+        generic map (
+            WIDTH           => WIDTH
+        )
+        port map (
+            clkIn           => clkIn,            -- System Clock
+            rstIn           => rstIn,            -- System Reset
+            regWrIn         => regWr,            -- Write Enable
+            reg1RdAddrIn    => reg1RdAddr,       -- Read Address for Port 1
+            reg2RdAddrIn    => reg2RdAddr,       -- Read Address for Port 2
+            regWrAddrIn     => regWrAddr,        -- Write Address
+            regWrDataIn     => regWrData,        -- Write Data
+            reg1RdDataOut   => reg1RdData,       -- Read Data for Port 1
+            reg2RdDataOut   => reg2RdData        -- Read Data for Port 2
+        );
     -- ALU ---------------------------------------------------------------------
     -- DATA MEM ----------------------------------------------------------------
 end behav;
