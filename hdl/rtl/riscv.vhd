@@ -7,7 +7,7 @@ use IEEE.STD_LOGIC_1164.all;
 --------------------------------------------------------------------------------
 entity riscv is
     generic (
-        WIDTH : natural := 32 -- Does not currently support 64-bit
+        WIDTH  : natural := 32 -- Does not currently support 64-bit
     );
     port (
         clkIn  : in    std_logic;

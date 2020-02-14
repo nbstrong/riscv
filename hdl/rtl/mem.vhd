@@ -10,11 +10,11 @@ entity mem is
         WIDTH     : natural
     );
     port (
-        clkIn     : in   std_logic;                             -- System Clock
-        wrIn      : in   std_logic;                             -- System Reset
-        addressIn : in   std_logic_vector(WIDTH-1 downto 0);    -- Address
-        dataIn    : in   std_logic_vector(WIDTH-1 downto 0);    -- Write Data
-        dataOut  :   out std_logic_vector(WIDTH-1 downto 0)     -- Read Data
+        clkIn     : in    std_logic;                            -- System Clock
+        wrIn      : in    std_logic;                            -- System Reset
+        addressIn : in    std_logic_vector(WIDTH-1 downto 0);   -- Address
+        dataIn    : in    std_logic_vector(WIDTH-1 downto 0);   -- Write Data
+        dataOut   :   out std_logic_vector(WIDTH-1 downto 0)    -- Read Data
     );
 end mem;
 --------------------------------------------------------------------------------
