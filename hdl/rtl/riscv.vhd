@@ -20,12 +20,15 @@ end riscv;
 architecture behav of riscv is
     -- CONSTANTS ---------------------------------------------------------------
     -- SIGNALS -----------------------------------------------------------------
-    signal address      : std_logic_vector(WIDTH-1 downto 0);
+    signal instrAddress : std_logic_vector(WIDTH-1 downto 0);
+    signal dataAddress  : std_logic_vector(WIDTH-1 downto 0);
     signal instruction  : std_logic_vector(WIDTH-1 downto 0);
-    signal regWr        : std_logic;
+    signal regWrEn      : std_logic;
     signal regWrData    : std_logic_vector(WIDTH-1 downto 0);
     signal reg1RdData   : std_logic_vector(WIDTH-1 downto 0);
     signal reg2RdData   : std_logic_vector(WIDTH-1 downto 0);
+    signal wrData       : std_logic_vector(WIDTH-1 downto 0);
+    signal rdData       : std_logic_vector(WIDTH-1 downto 0);
     -- ALIASES -----------------------------------------------------------------
     -- ATTRIBUTES --------------------------------------------------------------
 begin
@@ -37,20 +40,20 @@ begin
         port map (
             clkIn           => clkIn,                       -- System Clock
             rstIn           => rstIn,                       -- System Reset
-            addressOut      => address                      -- Address Output
+            addressOut      => instrAddress                 -- Address Output
         );
 
     -- INSTRUCTION MEMORY ------------------------------------------------------
-    instr_mem_ent : entity work.imem(behav)
+    instr_mem_ent : entity work.mem(behav)
         generic map (
             WIDTH           => WIDTH
         )
         port map (
             clkIn           => clkIn,                       -- System Clock
             wrIn            => wrIn,                        -- System Reset
-            addressIn       => addressIn,                   -- Address from Program Counter
+            addressIn       => instrAddress,                -- Address
             dataIn          => dataIn,                      -- Write Data
-            instrOut        => instruction                  -- Instruction Output
+            dataOut         => instruction                  -- Read Data
         );
 
     -- REGISTERS ---------------------------------------------------------------
@@ -61,7 +64,7 @@ begin
         port map (
             clkIn           => clkIn,                       -- System Clock
             rstIn           => rstIn,                       -- System Reset
-            regWrIn         => regWr,                       -- Write Enable
+            regWrEnIn       => regWrEn,                     -- Write Enable
             reg1RdAddrIn    => instruction(19 downto 15),   -- Read Address for Port 1
             reg2RdAddrIn    => instruction(24 downto 20),   -- Read Address for Port 2
             regWrAddrIn     => instruction(11 downto 7),    -- Write Address
@@ -70,5 +73,17 @@ begin
             reg2RdDataOut   => reg2RdData                   -- Read Data for Port 2
         );
     -- ALU ---------------------------------------------------------------------
+
     -- DATA MEM ----------------------------------------------------------------
+    data_mem_ent : entity work.mem(behav)
+        generic map (
+            WIDTH           => WIDTH
+        )
+        port map (
+            clkIn           => clkIn,                       -- System Clock
+            wrIn            => wrIn,                        -- System Reset
+            addressIn       => dataAddress,                 -- Address
+            dataIn          => wrData,                      -- Write Data
+            dataOut         => rdData                       -- Read Data
+        );
 end behav;

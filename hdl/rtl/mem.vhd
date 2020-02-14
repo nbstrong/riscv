@@ -3,23 +3,22 @@ use IEEE.STD_LOGIC_1164.all;
 use IEEE.NUMERIC_STD.ALL;
 -- This is a **very** crude cache ----------------------------------------------
 -- Probably synthesizable, but crap.
--- Does not clear on reset. This is so we can do things like write to the
--- memory, then reset the system and it will run the program we wrote.
+-- Does not clear on reset. This is to simulate non-volatile memory.
 --------------------------------------------------------------------------------
-entity imem is
+entity mem is
     generic (
         WIDTH     : natural
     );
     port (
-        clkIn     : in    std_logic;                            -- System Clock
-        wrIn      : in    std_logic;                            -- System Reset
-        addressIn : in    std_logic_vector(WIDTH-1 downto 0);   -- Address from Program Counter
-        dataIn    : in    std_logic_vector(WIDTH-1 downto 0);   -- Write Data
-        instrOut  :   out std_logic_vector(WIDTH-1 downto 0)    -- Instruction Output
+        clkIn     : in   std_logic;                             -- System Clock
+        wrIn      : in   std_logic;                             -- System Reset
+        addressIn : in   std_logic_vector(WIDTH-1 downto 0);    -- Address
+        dataIn    : in   std_logic_vector(WIDTH-1 downto 0);    -- Write Data
+        dataOut  :   out std_logic_vector(WIDTH-1 downto 0)     -- Read Data
     );
-end imem;
+end mem;
 --------------------------------------------------------------------------------
-architecture behav of imem is
+architecture behav of mem is
     -- TYPES -------------------------------------------------------------------
     type mem_array is array (0 to 63)
         of std_logic_vector (WIDTH-1 downto 0);
@@ -34,7 +33,7 @@ begin
         if (wrIn = '1') then
             mem_s(to_integer(unsigned(addressIn))) <= dataIn;
         else
-            instrOut <= mem_s(to_integer(unsigned(addressIn)));
+            dataOut <= mem_s(to_integer(unsigned(addressIn)));
         end if;
     end process;
 end behav;
