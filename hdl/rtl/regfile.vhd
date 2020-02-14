@@ -7,15 +7,15 @@ entity regfile is
         WIDTH     : natural
     );
     port (
-        clkIn           : in    std_logic;                                    -- System Clock
-        rstIn           : in    std_logic;                                    -- System Reset
-        regWrEnIn       : in    std_logic;                                    -- Write Enable
-        reg1RdAddrIn    : in    std_logic_vector(4 downto 0);                 -- Read Address for Port 1
-        reg2RdAddrIn    : in    std_logic_vector(4 downto 0);                 -- Read Address for Port 2
-        regWrAddrIn     : in    std_logic_vector(4 downto 0);                 -- Write Address
-        regWrDataIn     : in    std_logic_vector(WIDTH-1 downto 0);           -- Write Data
-        reg1RdDataOut   :   out std_logic_vector(WIDTH-1 downto 0);           -- Read Data for Port 1
-        reg2RdDataOut   :   out std_logic_vector(WIDTH-1 downto 0)            -- Read Data for Port 2
+        clkIn           : in    std_logic;                          -- System Clock
+        rstIn           : in    std_logic;                          -- System Reset
+        regWrEnIn       : in    std_logic;                          -- Write Enable
+        reg1RdAddrIn    : in    std_logic_vector(4 downto 0);       -- Read Address for Port 1
+        reg2RdAddrIn    : in    std_logic_vector(4 downto 0);       -- Read Address for Port 2
+        regWrAddrIn     : in    std_logic_vector(4 downto 0);       -- Write Address
+        regWrDataIn     : in    std_logic_vector(WIDTH-1 downto 0); -- Write Data
+        reg1RdDataOut   :   out std_logic_vector(WIDTH-1 downto 0); -- Read Data for Port 1
+        reg2RdDataOut   :   out std_logic_vector(WIDTH-1 downto 0)  -- Read Data for Port 2
     );
 end regfile;
 --------------------------------------------------------------------------------
