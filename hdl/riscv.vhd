@@ -5,7 +5,12 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 --------------------------------------------------------------------------------
 entity riscv is
-    port (
+    generic 
+    (
+        WIDTH : natural := 32
+    );
+    port 
+    (
         clkIn : in    std_logic;
         rstIn : in    std_logic
     );
@@ -19,7 +24,7 @@ architecture behav of riscv is
     -- ATTRIBUTES --------------------------------------------------------------
 begin
     -- PROGRAM COUNTER ---------------------------------------------------------
-    p_counter_ent : entity work.prgcounter(behav)
+    p_counter_ent : entity work.pcounter(behav)
         port map (
             clkIn       => clkIn,
             rstIn       => rstIn,

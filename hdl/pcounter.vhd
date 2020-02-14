@@ -1,17 +1,16 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
---use IEEE.STD_LOGIC_UNSIGNED.ALL;
 --------------------------------------------------------------------------------
-entity prgcounter is
+entity pcounter is
     port (
         clkIn       : in    std_logic;
         rstIn       : in    std_logic;
         addressOut  :   out std_logic_vector(63 downto 0)
     );
-end prgcounter;
+end pcounter;
 --------------------------------------------------------------------------------
-architecture behav of prgcounter is
+architecture behav of pcounter is
     -- CONSTANTS ---------------------------------------------------------------
     -- SIGNALS -----------------------------------------------------------------
     signal address : unsigned(63 downto 0);
