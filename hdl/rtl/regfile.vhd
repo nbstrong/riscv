@@ -25,7 +25,7 @@ architecture behav of regfile is
         of std_logic_vector (WIDTH-1 downto 0);
     -- CONSTANTS ---------------------------------------------------------------
     -- SIGNALS -----------------------------------------------------------------
-    signal reg_s : mem_array;
+    signal reg_s : reg_array;
     signal clkN  : std_logic;
     -- ALIASES -----------------------------------------------------------------
     -- ATTRIBUTES --------------------------------------------------------------
